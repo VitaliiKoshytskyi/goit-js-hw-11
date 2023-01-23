@@ -9,6 +9,8 @@ const BASE_URL = 'https://pixabay.com/api/'
 
 
 const formEl = document.querySelector('.search-form')
+const inputEl = document.querySelector('input')
+
 
 
 
@@ -27,9 +29,10 @@ const formEl = document.querySelector('.search-form')
 
 function formSubmitHandler(event) {
     event.preventDefault()
+    
 axios.get(`${BASE_URL}`,{
     params:{key:'33055694-6965e9dfecd686cd6e0cc5baf',
-    q:formEl.value,
+    q:inputEl.value,
     image_type:'photo',
     orientation:'horizontal',
     safesearch: 'true',
