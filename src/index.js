@@ -10,16 +10,20 @@ const loadMoreBtnEl = document.querySelector('.load-more')
 
 let pageCounter = 0;
 let intupText =''
-loadMoreBtnEl.style.display = 'none'
+
+let totalNumberOfImages = 0;
 
 
 async function formSubmitHandler(event) {
     event.preventDefault()
+
     intupText = inputEl.value.trim()
     pageCounter += 1
     galleryBoxEl.innerHTML = ''
     
-
+    
+    try {
+    
 const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     params: {
     key: '33055694-6965e9dfecd686cd6e0cc5baf',
@@ -32,8 +36,9 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     per_page:40
     }
 })
-    console.log(dataAfterFetch.data.hits)
-    
+    console.log(dataAfterFetch.data)
+        
+       
     if (dataAfterFetch.data.hits.length === 0 || intupText === '') {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
@@ -41,13 +46,18 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     loadMoreBtnEl.style.display = 'block'
     createMarkupHandler(dataAfterFetch)
     return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`)
+    } catch (error) {
+        galleryBoxEl.innerHTML = 'Ooops something goes wrong!'
+}
 
 }
 
 async function addMorePicturesHandler() {
-    if ( intupText === '') {
+   
+    try {
+        if (intupText === '') {
         return Notify.failure("COME ON!Nothing to load!Type some text,pls")
-    }
+    } 
     pageCounter+=1
     const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     params: {
@@ -60,13 +70,24 @@ async function addMorePicturesHandler() {
     q: intupText,
     page: pageCounter,
     }
-})
-    if (dataAfterFetch.data.hits.length === 0 ) {
+    })
+//          totalNumberOfImages = dataAfterFetch.data.totalHits
+//  console.log(totalNumberOfImages)
+        console.log(dataAfterFetch.data.hits.length)
+        if (dataAfterFetch.data.hits.length <= 0) {
+             loadMoreBtnEl.style.display = 'none'
+            return Notify.failure("We're sorry, but you've reached the end of search results.")
+        }
+   else if (dataAfterFetch.data.hits.length === 0 ) {
         
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
     createMarkupHandler(dataAfterFetch)
-    return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`) 
+    // return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`) 
+    } catch (error) {
+        galleryBoxEl.innerHTML = 'Ooops something goes wrong!'
+       
+   }
 }
 
 formEl.addEventListener('submit', formSubmitHandler)
