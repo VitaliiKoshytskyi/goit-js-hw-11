@@ -23,24 +23,24 @@ async function formSubmitHandler(event) {
 const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     params: {
     key: '33055694-6965e9dfecd686cd6e0cc5baf',
-    q:intupText,
     image_type:'photo',
     orientation:'horizontal',
     safesearch: 'true',
     fields: 'downloads',
+    q:intupText,
     page: pageCounter,
     per_page:40
     }
-}).then(data => {
-    if (data.data.hits.length === 0 || intupText === '') {
+})
+    console.log(dataAfterFetch.data.hits)
+    
+    if (dataAfterFetch.data.hits.length === 0 || intupText === '') {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
-    console.log(data.data.hits)
-    loadMoreBtnEl.style.display = 'block'
-    Notify.success(`Hooray! We found ${data.data.totalHits} images.`)
-    createMarkupHandler(data)
     
-})
+    loadMoreBtnEl.style.display = 'block'
+    createMarkupHandler(dataAfterFetch)
+    return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`)
 
 }
 
@@ -56,20 +56,17 @@ async function addMorePicturesHandler() {
     orientation:'horizontal',
     safesearch: 'true',
     fields: 'downloads',
-            per_page: 40,
-        q: intupText,
+    per_page: 40,
+    q: intupText,
     page: pageCounter,
     }
-}).then(data => {
-    if (data.data.hits.length === 0 ) {
+})
+    if (dataAfterFetch.data.hits.length === 0 ) {
         
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
-    createMarkupHandler(data)
-    return Notify.success(`Hooray! We found ${data.data.totalHits} images.`)
-    
-})
-    
+    createMarkupHandler(dataAfterFetch)
+    return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`) 
 }
 
 formEl.addEventListener('submit', formSubmitHandler)
