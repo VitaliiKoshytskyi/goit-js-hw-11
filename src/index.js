@@ -10,7 +10,7 @@ const inputEl = document.querySelector('input')
 const galleryBoxEl = document.querySelector('.gallery')
 const loadMoreBtnEl = document.querySelector('.load-more')
 
-let pageCounter = 0;
+let pageCounter = null;
 let intupText =''
 loadMoreBtnEl.style.display = 'none'
 const lightbox = new SimpleLightbox('.gallery a', {captionsData :'Alt',captionDelay:300 });
@@ -21,7 +21,7 @@ async function formSubmitHandler(event) {
     event.preventDefault()
 
     intupText = inputEl.value.trim()
-    pageCounter += 1
+    pageCounter = 1
     galleryBoxEl.innerHTML = ''
     
     try {
@@ -33,11 +33,11 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     safesearch: 'true',
     fields: 'downloads',
     q:intupText,
-    page: pageCounter,
+    page:pageCounter ,
     per_page:40
     }
 })
-       
+    
     if (dataAfterFetch.data.hits.length === 0 || intupText === '') {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
