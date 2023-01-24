@@ -12,7 +12,6 @@ const loadMoreBtnEl = document.querySelector('.load-more')
 
 let pageCounter = 0;
 let intupText =''
-let totalNumberOfImages = 0;
 loadMoreBtnEl.style.display = 'none'
 const lightbox = new SimpleLightbox('.gallery a', {captionsData :'Alt',captionDelay:300 });
 
@@ -26,7 +25,6 @@ async function formSubmitHandler(event) {
     galleryBoxEl.innerHTML = ''
     
     try {
-    
 const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     params: {
     key: '33055694-6965e9dfecd686cd6e0cc5baf',
@@ -54,7 +52,6 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
 }
 
 async function addMorePicturesHandler() {
-   
     try {
         if (intupText === '') {
         return Notify.failure("COME ON!Nothing to load!Type some text,pls")
@@ -92,7 +89,7 @@ async function addMorePicturesHandler() {
 function createMarkupHandler(data) {
     const markup = data.data.hits.map(item => `<div class="photo-card">
     <a class="gallery__item" href="${item.largeImageURL}">
-     <img src="${item.webformatURL}" alt="${item.tags}" width =200 loading="lazy" /></a>
+     <img src="${item.webformatURL}" alt="${item.tags}" width =250 height= 200 loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>Likes:${item.likes}</b>

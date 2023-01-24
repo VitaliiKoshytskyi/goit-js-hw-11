@@ -9,13 +9,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #fafafa;
     color: #212121;
-    line-height: 1.5;
+    line-height: 1.1;
     
 }
 .form-btn{
     border-radius: 5px;
     background-color: aqua;
     border: none;
+    height: 30px;
     
     /* padding-top: 20px;
     padding-bottom: 20px; */
@@ -26,7 +27,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: olivedrab;
+    background-color: rgba(red, green, blue, 0.5);
     border-radius: 5px;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -41,6 +42,17 @@ body {
 }
 
 .search-input{
+    height: 30px;
     border: none;
     border-radius: 5px;
+    background-color: #212121;
+    border: #212121;
+    color: #fafafa;
+}
+img{
+    border-radius: 10px;
+}
+.info{
+ 
+   
 }
