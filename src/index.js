@@ -10,8 +10,9 @@ const inputEl = document.querySelector('input')
 const galleryBoxEl = document.querySelector('.gallery')
 const loadMoreBtnEl = document.querySelector('.load-more')
 
+
 let pageCounter = null;
-let intupText =''
+let intupText = '';
 loadMoreBtnEl.style.display = 'none'
 const lightbox = new SimpleLightbox('.gallery a', {captionsData :'Alt',captionDelay:300 });
 
@@ -20,6 +21,9 @@ const lightbox = new SimpleLightbox('.gallery a', {captionsData :'Alt',captionDe
 async function formSubmitHandler(event) {
     event.preventDefault()
 
+    if (intupText === inputEl.value.trim()) {
+        return
+    }
     intupText = inputEl.value.trim()
     pageCounter = 1
     galleryBoxEl.innerHTML = ''
