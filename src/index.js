@@ -36,8 +36,6 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     per_page:40
     }
 })
-    console.log(dataAfterFetch.data)
-        
        
     if (dataAfterFetch.data.hits.length === 0 || intupText === '') {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
@@ -47,7 +45,7 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     createMarkupHandler(dataAfterFetch)
     return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`)
     } catch (error) {
-        galleryBoxEl.innerHTML = 'Ooops something goes wrong!'
+        Notify.error('Ooops something goes wrong!')
 }
 
 }
@@ -71,12 +69,8 @@ async function addMorePicturesHandler() {
     page: pageCounter,
     }
     })
-        //  totalNumberOfImages = dataAfterFetch.data.totalHits
-        // console.log(totalNumberOfImages)
-     console.log(dataAfterFetch.data.hits.length)
-        // console.log(dataAfterFetch.data.hits.length)
+      
         if (dataAfterFetch.data.hits.length < 40) {
-            // throw new Error()
              loadMoreBtnEl.style.display = 'none'
          Notify.failure("We're sorry, but you've reached the end of search results.")
             
@@ -86,11 +80,9 @@ async function addMorePicturesHandler() {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
     createMarkupHandler(dataAfterFetch)
-    // return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`) 
+    
     } catch (error) {
-        // loadMoreBtnEl.style.display = 'none'
-        //  Notify.failure("We're sorry, but you've reached the end of search results.")
-       
+       Notify.failure('oooPs something goes wrong')
    }
 }
 
