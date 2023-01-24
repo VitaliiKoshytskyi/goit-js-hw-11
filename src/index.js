@@ -1,5 +1,7 @@
 import axios from "axios"
 import { Notify } from "notiflix"
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const BASE_URL = 'https://pixabay.com/api/'
 
@@ -12,6 +14,7 @@ let pageCounter = 0;
 let intupText =''
 let totalNumberOfImages = 0;
 loadMoreBtnEl.style.display = 'none'
+const lightbox = new SimpleLightbox('.gallery a', {captionsData :'Alt',captionDelay:300 });
 
 
 
@@ -40,14 +43,14 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
     if (dataAfterFetch.data.hits.length === 0 || intupText === '') {
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
-    
+    // console.log(dataAfterFetch.data.hits)
     loadMoreBtnEl.style.display = 'block'
     createMarkupHandler(dataAfterFetch)
     return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`)
     } catch (error) {
         Notify.error('Ooops something goes wrong!')
 }
-
+ 
 }
 
 async function addMorePicturesHandler() {
@@ -87,8 +90,9 @@ async function addMorePicturesHandler() {
 }
 
 function createMarkupHandler(data) {
-     const markup = data.data.hits.map(item => `<div class="photo-card">
-  <img src="${item.webformatURL}" alt="${item.tags}" width =200 loading="lazy" />
+    const markup = data.data.hits.map(item => `<div class="photo-card">
+    <a class="gallery__item" href="${item.largeImageURL}">
+     <img src="${item.webformatURL}" alt="${item.tags}" width =200 loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>Likes:${item.likes}</b>
@@ -106,6 +110,7 @@ function createMarkupHandler(data) {
 </div>`).join('')
 
     galleryBoxEl.insertAdjacentHTML('beforeend', markup)
+    lightbox.refresh()
 }
 
 
