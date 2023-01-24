@@ -10,8 +10,9 @@ const loadMoreBtnEl = document.querySelector('.load-more')
 
 let pageCounter = 0;
 let intupText =''
-
 let totalNumberOfImages = 0;
+loadMoreBtnEl.style.display = 'none'
+
 
 
 async function formSubmitHandler(event) {
@@ -20,7 +21,6 @@ async function formSubmitHandler(event) {
     intupText = inputEl.value.trim()
     pageCounter += 1
     galleryBoxEl.innerHTML = ''
-    
     
     try {
     
@@ -71,12 +71,15 @@ async function addMorePicturesHandler() {
     page: pageCounter,
     }
     })
-//          totalNumberOfImages = dataAfterFetch.data.totalHits
-//  console.log(totalNumberOfImages)
-        console.log(dataAfterFetch.data.hits.length)
-        if (dataAfterFetch.data.hits.length <= 0) {
+        //  totalNumberOfImages = dataAfterFetch.data.totalHits
+        // console.log(totalNumberOfImages)
+     console.log(dataAfterFetch.data.hits.length)
+        // console.log(dataAfterFetch.data.hits.length)
+        if (dataAfterFetch.data.hits.length < 40) {
+            // throw new Error()
              loadMoreBtnEl.style.display = 'none'
-            return Notify.failure("We're sorry, but you've reached the end of search results.")
+         Notify.failure("We're sorry, but you've reached the end of search results.")
+            
         }
    else if (dataAfterFetch.data.hits.length === 0 ) {
         
@@ -85,18 +88,15 @@ async function addMorePicturesHandler() {
     createMarkupHandler(dataAfterFetch)
     // return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`) 
     } catch (error) {
-        galleryBoxEl.innerHTML = 'Ooops something goes wrong!'
+        // loadMoreBtnEl.style.display = 'none'
+        //  Notify.failure("We're sorry, but you've reached the end of search results.")
        
    }
 }
 
-formEl.addEventListener('submit', formSubmitHandler)
-loadMoreBtnEl.addEventListener('click',addMorePicturesHandler)
-
-
 function createMarkupHandler(data) {
      const markup = data.data.hits.map(item => `<div class="photo-card">
-  <img src="${item.webformatURL}" alt="${item.tags}" width =100 loading="lazy" />
+  <img src="${item.webformatURL}" alt="${item.tags}" width =200 loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes:${item.likes}</b>
@@ -115,4 +115,11 @@ function createMarkupHandler(data) {
 
     galleryBoxEl.insertAdjacentHTML('beforeend', markup)
 }
+
+
+formEl.addEventListener('submit', formSubmitHandler)
+loadMoreBtnEl.addEventListener('click',addMorePicturesHandler)
+
+
+
 
