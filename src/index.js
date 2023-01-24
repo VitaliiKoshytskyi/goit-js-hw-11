@@ -42,7 +42,7 @@ const dataAfterFetch = await axios.get(`${BASE_URL}`,{
         return Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
     // console.log(dataAfterFetch.data.hits)
-    loadMoreBtnEl.style.display = 'block'
+    loadMoreBtnEl.style.display = 'flex'
     createMarkupHandler(dataAfterFetch)
     return Notify.success(`Hooray! We found ${dataAfterFetch.data.totalHits} images.`)
     } catch (error) {

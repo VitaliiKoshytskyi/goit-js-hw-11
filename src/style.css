@@ -7,14 +7,14 @@ body {
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fafafa;
+    background-color: #ea9d9d;
     color: #212121;
     line-height: 1.1;
     
 }
 .form-btn{
     border-radius: 5px;
-    background-color: aqua;
+    background-color: rgb(108, 194, 194);
     border: none;
     height: 30px;
     
@@ -27,7 +27,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(red, green, blue, 0.5);
+    /* background-color: rgba(red, green, blue, 0.5); */
     border-radius: 5px;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -45,10 +45,23 @@ body {
     height: 30px;
     border: none;
     border-radius: 5px;
-    background-color: #212121;
+    background-color:rgb(108, 194, 194);
     border: #212121;
-    color: #fafafa;
+    padding: 0;
 }
 img{
     border-radius: 10px;
+}
+.load-more{
+    
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    text-align: center;
+    align-items: center;
+    background-color: rgb(108, 194, 194);
+    border: none;
 }
